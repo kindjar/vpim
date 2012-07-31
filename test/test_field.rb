@@ -152,5 +152,11 @@ class TestField < Test::Unit::TestCase
     assert_equal("0:xx\n xxxx\n",     Vpim::DirectoryInfo::Field.create('0', 'x' * 6).encode(4))
     assert_equal("0:xx\n xxxx\n x\n", Vpim::DirectoryInfo::Field.create('0', 'x' * 7).encode(4))
   end
+  
+  def test_carriage_return_encoding
+    address = Vpim::Vcard::Address.new
+    address.street = "xx\r\nxx"
+    assert_equal("ADR:;;xx\\nxx;;;;\n",   address.encode.to_s)
+  end
 end
 
